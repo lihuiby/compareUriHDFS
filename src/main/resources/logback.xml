@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<contextName>migration</contextName>
+	<property name="LOG_HOME" value="./logs" />
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>migration:%5level, %d{yyyy-MM-dd_HH:mm:ss}, %M\(%logger{35}.java,%L\), %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<appender name="ALL"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/%d{yyyyMM,aux}/all.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				migration %d{yyyy-MM-dd_HH:mm:ss} [%t] %-5le - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com" level="ALL" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ALL" />
+	</logger>
+</configuration>
